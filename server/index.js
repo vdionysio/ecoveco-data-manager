@@ -6,16 +6,13 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(express.json());
+
 // Permite acesso externo
 app.use(cors());
 
 // Desativa o X-Powered-By: Express
 app.disable('x-powered-by');
-
-// Criamos uma rota raiz com o texto Hello World!
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
 
 // routes
 app.use('/user', routes.user);
