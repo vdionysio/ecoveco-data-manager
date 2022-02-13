@@ -1,5 +1,4 @@
 const { generateToken } = require('../helpers');
-const { User } = require('../models/');
 const service = require('../services/user.service');
 
 const createUser = async (req, res, next) => {
@@ -17,7 +16,12 @@ const createUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const test = await service.login(req.body);
+    const credentials = req.body;
+    await service.login(credentials);
+
+    const token = generateToken(credentials.email);
+
+    res.status(200).json({ token });
   } catch (err) {
     return next(err);
   }
@@ -25,4 +29,5 @@ const login = async (req, res, next) => {
 
 module.exports = {
   createUser,
+  login,
 };

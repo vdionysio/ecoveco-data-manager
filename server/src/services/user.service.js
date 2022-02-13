@@ -19,11 +19,13 @@ const createUser = async (user) => {
 const login = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
 
-  if (!user) throw validateError(401, 'Invalid email or pass');
+  if (!user) throw validateError(401, 'Invalid email or password');
 
   if (!(await user.checkPassword(password))) {
-    throw validateError(401, 'Invalid email or pass');
+    throw validateError(401, 'Invalid email or password');
   }
+
+  return true;
 };
 
 module.exports = {

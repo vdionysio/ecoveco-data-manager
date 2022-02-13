@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { validateError } = require('../services/auxFunctions');
+const { validateError } = require('../helpers/index');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {

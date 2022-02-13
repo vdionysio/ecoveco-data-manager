@@ -14,9 +14,9 @@ describe('When try to login,', () => {
   });
 
   it('should return a token when login input is valid', async () => {
-    const user = await User.create({
+    await User.create({
       displayName: 'Dionysio',
-      email: 'vini@gmail.com',
+      email: 'unique@email.com',
       password: '12345678',
     });
 
@@ -25,37 +25,26 @@ describe('When try to login,', () => {
       password: '12345678',
     });
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('token');
   });
 
-  // it('should return an object with a message "User already registered" when user email is already registered', async () => {
-  //   await request(app).post('/user').send({
-  //     displayName: 'Dionysio',
-  //     email: 'notunique@email.com',
-  //     password: '12345678',
-  //   });
-  //   const response = await request(app).post('/user').send({
-  //     displayName: 'Vinícius',
-  //     email: 'notunique@email.com',
-  //     password: '12345678',
-  //   });
+  it('should not authenticate when login input is invalid', async () => {
+    await User.create({
+      displayName: 'Dionysio',
+      email: 'vini@gmail.com',
+      password: '12345678',
+    });
 
-  //   expect(response.status).toBe(409);
-  //   expect(response.body).toHaveProperty('message', 'User already registered');
-  // });
+    const response = await request(app).post('/login').send({
+      email: 'unique@email.com',
+      password: '11111111',
+    });
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty(
+      'message',
+      'Invalid email or password'
+    );
+  });
 });
-
-// describe('TEST', () => {
-//   it('create user', async () => {
-//     const user = await User.create({
-//       displayName: 'Dionysio',
-//       email: 'vini@gmail.com',
-//       passwordHash: '12345678',
-//     });
-
-//     console.log(user);
-
-//     expect(user.email).toBe('vini@gmail.com');
-//   });
-// });
