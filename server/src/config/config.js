@@ -1,25 +1,12 @@
-require('dotenv').config();
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 
 module.exports = {
-  development: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'ecoveco_data',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
-  },
-  test: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'ecoveco_data',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
-  },
-  production: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'ecoveco_data',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
-  },
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT || 'mysql',
+  storage: './__tests__/database.sqlite',
 };
