@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Cities', {
+    return queryInterface.createTable('Locals', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,14 +13,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      stateId: {
+      cityId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'stateId',
+        field: 'cityId',
         references: {
-          model: 'States',
+          model: 'Cities',
           key: 'id',
         },
       },
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('Cities');
+    await queryInterface.dropTable('Locals');
   },
 };

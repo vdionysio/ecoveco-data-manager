@@ -2,25 +2,25 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Cities', {
+    return queryInterface.createTable('Transects', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      transect: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      stateId: {
+      localId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'stateId',
+        field: 'localId',
         references: {
-          model: 'States',
+          model: 'Locals',
           key: 'id',
         },
       },
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('Cities');
+    await queryInterface.dropTable('Transects');
   },
 };
